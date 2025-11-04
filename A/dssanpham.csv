@@ -1,4 +1,4 @@
-Loai,Brand,Size,Color,Material,style,Origin,Number,Price
+Loai;Brand;Size;Color;Material;Style;Origin;Number;Price
 1;LADOS;XXL;White;Cotton;Duong Pho;Thai Lan;138;526866.00
 3;IVY;XXL;White;Polyester;Sport;Viet Nam;140;767154.00
 2;IVY;S;Black;Jean;Slimfit;Trung Quoc;269;691932.00
