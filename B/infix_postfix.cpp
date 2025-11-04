@@ -5,7 +5,6 @@
 #include <cctype>
 using namespace std;
 
-// ======================= TEMPLATE STACK =======================
 template <typename T>
 class Stack {
 private:
@@ -36,7 +35,6 @@ public:
     }
 };
 
-// ======================= CLASS BieuThuc =======================
 class BieuThuc {
 private:
     string infix, postfix, prefix;
@@ -54,14 +52,14 @@ private:
 
     bool isNumber(const string& s) {
         return isdigit(s[0]) || ((s[0] == '+' || s[0] == '-') && s.size() > 1 && isdigit(s[1]));
-        // l� s? 1, -1, +1
+        // là số 1, -1, +1
     }
 
 public:
     bool check() {
         Stack<char> s;
         int last = 1;  
-        // 0 = s?, 1 = to�n t?, 2 = '(', 3 = ')'
+        // 0 = số, 1 = toán tử, 2 = '(', 3 = ')'
 
         for (int i = 0; i < infix.size(); i++) {
             char c = infix[i];
@@ -77,13 +75,13 @@ public:
             else if (c == ')') {
                 if (s.isEmpty() || s.top() != '(') return false;
                 s.pop();
-                if (last == 1 || last == 2) return false;  // kh�ng c� g? trong ngo?c
+                if (last == 1 || last == 2) return false;  // không có gì trong ngoặc
                 last = 3;
             }
 
             // 6 6
             else if (isdigit(c) || c == '.') {
-                if (last == 3 || last == 0) return false; // kh�ng th? c� 2 s? li?n
+                if (last == 3 || last == 0) return false; // không thể có 2 số liền
                 while (i < infix.size() && (isdigit(infix[i]) || infix[i] == '.')) i++;
                 i--; 
                 last = 0;
@@ -91,9 +89,7 @@ public:
 
             // 4 +
             else if (isOperator(c)) {
-                // Tr�?ng h?p d?u �m/d��ng �?ng �?u ho?c sau '(' ? l� ph?n c?a s?
                 if ((c == '+' || c == '-') && (i == 0 || last == 1 || last == 2)) {
-                    // n?u sau �� kh�ng c� s? th? sai
                     int j = i + 1;
                     while (j < infix.size() && isspace(infix[j])) j++;
                     if (j >= infix.size() || (!isdigit(infix[j]) && infix[j] != '.')) return false;
@@ -104,15 +100,15 @@ public:
                 last = 1;
             }
 
-            // k� t? l?
+            // kí tự lạ
             else {
                 return false;
             
             }
         }
 
-        if (!s.isEmpty()) return false;        // c?n ngo?c ch�a ��ng
-        if (last == 1 || last == 2) return false; // k?t th�c b?ng to�n t? ho?c '('
+        if (!s.isEmpty()) return false;        // còn ngoặc chưa đóng
+        if (last == 1 || last == 2) return false; // kết thúc bằng toán tử hoặc '('
 
         return true;
     }
@@ -122,7 +118,7 @@ public:
         cout << "Nhap bieu thuc trung to: ";
         getline(cin, infix);
         if(!check()){
-            cout<<"Bieu thuc sai";
+            cout<<"Bien thuc sai";
             return false;
         }
         return true;
@@ -140,23 +136,22 @@ public:
         return s.isEmpty();
     }
 
-    // =================== CHUY?N TRUNG T? ? H?U T? ===================
     void toPostfix() {
         postfix = "";
         Stack<char> s;
         int last = 1; 
-        // 0: s? 
-        // 1: to�n t? 
+        // 0: số 
+        // 1: toán tử 
         // 2: '(' 
         // 3: ')'
 
         for (int i = 0; i < infix.size(); i++) {
             char c = infix[i];
 
-            // 1. D?u c�ch
+            // 1. Dấu cách
             if (isspace(c)) continue;
 
-            // 2. x? l? s? �m ho?c d��ng �?ng �?u / sau to�n t? / sau '(' 
+            // 2. xử lý số âm hoặc dương đứng đầu / sau toán tử / sau '(' 
             if ((c == '+' || c == '-') && (i == 0 || last == 1 || last == 2)) {
                 string num;
                 num += c;
@@ -169,7 +164,7 @@ public:
                 i--;
                 last = 0;
             }
-            // 3. x? l? s? b?nh th�?ng 
+            // 3. xử lý số bình thường 
             else if (isdigit(c) || c == '.') {
                 string num;
                 while (i < infix.size() && (isdigit(infix[i]) || infix[i] == '.')) {
@@ -180,22 +175,22 @@ public:
                 i--;
                 last = 0;
             }
-            // 4. ngo?c m? 
+            // 4. ngoặc mở 
             else if (c == '(') {
                 s.push(c);
                 last = 2;
             }
-            // 5. ngo?c ��ng 
+            // 5. ngoặc đóng 
             else if (c == ')') {
                 while (!s.isEmpty() && s.top() != '(') {
                     postfix += s.top();
                     postfix += ' ';
                     s.pop();
                 }
-                if (!s.isEmpty()) s.pop(); // b? '('
+                if (!s.isEmpty()) s.pop(); // bỏ '('
                 last = 3;
             }
-            // 6. to�n t? 
+            // 6. toán tử 
             else if (isOperator(c)) {
                 while (!s.isEmpty() &&  ((uuTien(s.top()) > uuTien(c)) || (uuTien(s.top()) == uuTien(c) && c != '^'))) {
                     postfix += s.top();
@@ -213,12 +208,11 @@ public:
             s.pop();
         }
 
-        // cout << "Bieu thuc hau to: " << postfix << endl;
     }
     string getpos(){return postfix;}
 
-    // ===== TRUNG T? ? TI?N T? =====
     void toPrefix() {
+        string tmppos=postfix;
         string rev = "";
         for (int i = infix.size() - 1; i >= 0; i--) {
             if (infix[i] == '(') rev += ')';
@@ -230,7 +224,6 @@ public:
         infix = rev;
         toPostfix();
 
-        // �?o th? t? c�c token thay v? �?o chu?i
         stringstream ss(postfix);
         string token;
         Stack<string> tokens;
@@ -242,12 +235,12 @@ public:
             tokens.pop();
         }
 
+        postfix=tmppos;
         infix = tmp;
     }
 
     string getpre(){return prefix;}
 
-    // =================== T�NH GI� TR? H?U T? ===================
     void tinhGiaTriHauTo() {
         if (postfix.empty()) {
             cout << "Chua co bieu thuc hau to! Hay chon muc 3 truoc.\n";
@@ -281,7 +274,6 @@ public:
     }
 };
 
-// ======================= MAIN MENU =======================
 int main() {
     BieuThuc bt;
     int chon;
@@ -311,4 +303,3 @@ int main() {
 
     return 0;
 }
-

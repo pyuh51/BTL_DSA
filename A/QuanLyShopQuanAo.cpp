@@ -307,6 +307,7 @@ void suaTruong(QuanAo* sp, vector<QuanAo*>& ds) {
             case 8: cout<<"Gia moi: ";
                     while(!(cin>>d)||d<=0){cin.clear();cin.ignore(IGNORE_BUFFER_SIZE,'\n');}
                     cin.ignore(IGNORE_BUFFER_SIZE,'\n'); sp->setPrice(d); break;
+            default: cout<<"Lua chon khong hop le!\n"; continue;
         }
         ghiDuLieu(ds);
         cout<<"==> Cap nhat thanh cong!\n";
@@ -321,6 +322,7 @@ void sapXepDanhSach(vector<QuanAo*>& dsHienThi) {
     
     if (choice != 'y' && choice != 'Y') return;
     
+    tt:
     int opt;
     cout << "\n--- Sap Xep San Pham ---\n"
          << "1. Gia tang\n"
@@ -339,7 +341,7 @@ void sapXepDanhSach(vector<QuanAo*>& dsHienThi) {
         case 4: sort(dsHienThi.begin(),dsHienThi.end(),[](QuanAo*a,QuanAo*b){return a->getNumber()>b->getNumber();}); break;
         case 5: sort(dsHienThi.begin(),dsHienThi.end(),[](QuanAo*a,QuanAo*b){
                  return toLowerSafe(a->getBrand())<toLowerSafe(b->getBrand());}); break;
-        default: cout << "Lua chon khong hop le!\n"; break;
+        default: cout << "Lua chon khong hop le!\n"; goto tt;
     }
     cout << "==> Da sap xep!\n";
 }
