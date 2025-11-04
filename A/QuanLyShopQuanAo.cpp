@@ -231,7 +231,7 @@ void hienThiSanPhamCoSTT(const vector<QuanAo*>& ds) {
 
 void ghiDuLieu(const vector<QuanAo*>& ds) {
     fstream f("dssanpham.csv", ios::out | ios::trunc);
-    f<<"Loai,Brand,Size,Color,Material,style,Origin,Number,Price\n";
+    f<<"Loai;Brand;Size;Color;Material;Style;Origin;Number;Price\n";
     f<<fixed<<setprecision(2); 
     for(auto sp: ds) {
         f<<sp->getLoaiCode()<<";" 
