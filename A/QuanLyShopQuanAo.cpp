@@ -321,7 +321,7 @@ void sapXepDanhSach(vector<QuanAo*>& dsHienThi) {
     cin.ignore(IGNORE_BUFFER_SIZE, '\n');
     
     if (choice != 'y' && choice != 'Y') return;
-    
+
     tt:
     int opt;
     cout << "\n--- Sap Xep San Pham ---\n"
@@ -392,12 +392,14 @@ vector<QuanAo*> timKiemSanPham(const vector<QuanAo*>& ds) {
         long long soMin = smin.empty()? -1   : atoll(smin.c_str());
         long long soMax = smax.empty()? 1e18 : atoll(smax.c_str());
 
+
+
         for(auto sp: ds){
             if(matchSanPham(sp,loai,brand,size,material,style,origin,
                              giaMin,giaMax,soMin,soMax))
                 kq.push_back(sp);
         }
-
+  
         if(kq.empty()){
             char x; cout<<"\n==> Khong tim thay. Nhap lai? (y/n): ";
             cin>>x; cin.ignore(IGNORE_BUFFER_SIZE,'\n');
@@ -411,7 +413,7 @@ vector<QuanAo*> timKiemSanPham(const vector<QuanAo*>& ds) {
             break;
         }
     }
-    
+
     return kq;
 }
 
